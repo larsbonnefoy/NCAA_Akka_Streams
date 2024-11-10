@@ -19,6 +19,7 @@ import java.time.LocalDate
 
 class CsvReaderSource[T]
 
+//TODO: replace transform with trait or implict ?
 object CsvReaderSource {
 
   /**
