@@ -17,3 +17,8 @@ case class CsvRow(
   //numOt: Int,
   //academicYear: String
   )
+
+case class SundayVictories(
+  team: String,
+  numberWins: Int,
+)

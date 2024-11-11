@@ -7,12 +7,14 @@ import akka.stream.scaladsl.Sink
 import NcaaPipeFilter.CsvReaderSource
 import java.time.LocalDate
 import akka.stream.scaladsl.Source
+import NcaaPipeFilter.SundayVictoriesFlow
 
-object RunApp extends App {
+object Main extends App {
   implicit val system : ActorSystem = ActorSystem("GraphBasics")
   implicit val materializer : ActorMaterializer = ActorMaterializer()
 
-  val printMapSink = Sink.foreach[CsvRow](row => println(s"[${row.gameDate}] Won: ${row.winTeam}, Lost: ${row.loseTeam} on ${row.day}"))
+  // val printMapSink = Sink.foreach[CsvRow](row => println(s"[${row.gameDate}] Won: ${row.winTeam}, Lost: ${row.loseTeam} on ${row.day}"))
+  val printTotalRows = Sink.foreach[Int](println)
 
   val csvSource = CsvReaderSource("ressources/basketball.csv") {
     mapRow => CsvRow(mapRow("season"), 
@@ -24,6 +26,15 @@ object RunApp extends App {
                   mapRow("lose_alias"))
     }
 
-  Source.fromGraph(csvSource).runWith(printMapSink)
+  //TODO: Should convert days of the week to specific type to avoid checking on strings
+  val sundayVictories = SundayVictoriesFlow[CsvRow, Int](0) {
+    (count, csvRow) => if (csvRow.day == "Sunday") then count + 1 else count
+  }
+
+  //Source.fromGraph(csvSource).via(sundayVictories).runWith(printTotalRows)
+  val source = Source.fromGraph(csvSource).groupBy(100, _.winTeam).to(Sink.fold(0)((count, row) => {
+    println(s"Wins: ${row.winTeam} --> Won games on Sundays ${count}")
+    if (row.day == "Sunday") then count + 1 else count
+  })).run()
 
 }
