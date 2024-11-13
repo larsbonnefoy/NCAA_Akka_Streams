@@ -7,6 +7,8 @@ import akka.stream.FlowShape
 import akka.stream.scaladsl.Balance
 import akka.stream.scaladsl.Merge
 import akka.stream.Inlet
+import akka.stream.Attributes
+import akka.event.Logging
 /**
  * Splits incoming stream by `key`
  * Should implement backpressure/buffer
@@ -33,18 +35,21 @@ object CustomFlow {
   }
 
 
-  def apply[I, O, K](keyGen: I => K)(worker: Flow[I, O, Any]) = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
+  def apply[I, O, K](keyGen: I => K)(worker: Flow[I, O, Any])(aggregator: Flow[O, O, Any]) = 
+    GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
 
-    val groupByFlow = Flow[I].map[I] {elt => elt}
-                      .groupBy(100, keyGen)
-
-    val printFlow = Flow[O].map[O] {elt => println(s"Got element ${elt} from merge"); elt}
+    //TODO: could probably do this directly on inlet or smtgh
+    val groupByFlow = Flow[I].groupBy(1000, keyGen)
 
     val balancerFlow = balancer(worker)
 
     val fullFlow = groupByFlow
+                  // .log("After Flow Split")
                   .via(balancerFlow)
-                  .via(printFlow)
+                  .via(aggregator)
+                  // .log("After Balancer")
+                  // .withAttributes(Attributes
+                  //   .logLevels(onElement = Logging.InfoLevel))
                   .mergeSubstreams
 
     val fullFlowShape = builder.add(fullFlow)
