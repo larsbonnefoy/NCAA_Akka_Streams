@@ -18,7 +18,7 @@ import akka.stream.scaladsl.MergePreferred
 import scala.concurrent.duration._
 import akka.stream.OverflowStrategy
 
-object GraphBasics extends App {
+object GraphBasics {
   println("Hello from Graph basics")
 
   implicit val system : ActorSystem = ActorSystem("GraphBasics")

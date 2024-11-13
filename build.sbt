@@ -18,3 +18,5 @@ lazy val root = project
 
     libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
   )
+
+fork in run := true
