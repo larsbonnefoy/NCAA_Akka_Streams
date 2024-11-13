@@ -18,7 +18,6 @@ case class CsvRow(
   //academicYear: String
   )
 
-case class SundayVictories(
-  team: String,
-  numberWins: Int,
-)
+case class SundayVictories(team: String, numberWins: Int) {
+  override def toString: String = s"Name: ${team} --> Won Games on Sundays: ${numberWins}"
+}

@@ -29,26 +29,37 @@ object Main extends App {
     }
 
   //TODO: Should convert days of the week to specific type to avoid checking on strings
+  //Filtering before does not work as it will create empty streams for teams that didnt win on Sunday
+  //Might be fixable if we can retrieve the key on which sublow has been split, so that we can init empty element to (name, 0)
+  //
+  // lazy val groupKey = (elt: CsvRow) => elt.winTeam 
+  lazy val neutralElt = SundayVictories("", 0)
+
   val countFlow = Flow[CsvRow]
-                    .filter(_.day == "Sunday")
-                    .fold(SundayVictories("", 0)) {(acc, rowElt) =>
-                    (SundayVictories(rowElt.winTeam, acc.numberWins + 1))}
-                    .filter(_.team != "") //TODO: for some reason produces empty values
+                    .fold(neutralElt) {(acc, rowElt) =>
+                      if rowElt.day == "Sunday" then SundayVictories(rowElt.winTeam, acc.numberWins + 1)
+                      else SundayVictories(rowElt.winTeam, acc.numberWins)
+                    }
+                    .filter(_.team != "") //TODO: for some reason produces empty values -> Check why
+
 
   val aggregatorFlow = Flow[SundayVictories]
-                        .map {elt => println("???: " + elt); elt}
-                        .reduce((a, b) => SundayVictories(a.team, a.numberWins + b.numberWins))
+                        .reduce {
+                          (a, b) => SundayVictories(a.team, a.numberWins + b.numberWins)
+                        }
 
   val q1Flow = CustomFlow[CsvRow, SundayVictories, String](_.winTeam)(countFlow)(aggregatorFlow)
 
-  val source = Source.fromGraph(csvSource)
+  val q1Sink = Sink.fromGraph(new WriterSink("Question1.txt", 20))
+
+  val graph = Source.fromGraph(csvSource)
                 .via(q1Flow)
-                .toMat(Sink.foreach(println))(Keep.right)
+                .to(q1Sink)
                 .run()
 
-   source.onComplete {
-     case Success(_) => println("All elements have been processed")
-     case Failure(exception) => println(s"An error occured with status ${exception}")
-   }
+   // graph.onComplete {
+   //   case Success(_) => println("All elements have been processed")
+   //   case Failure(exception) => println(s"An error occured with status ${exception}")
+   // }
 
 }
