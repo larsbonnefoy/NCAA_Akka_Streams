@@ -1,0 +1,186 @@
+Name: Lumberjacks --> Was 0 times in quarter finals
+Name: Yellow Jackets --> Was 3 times in quarter finals
+Name: Braves --> Was 0 times in quarter finals
+Name: Mountain Hawks --> Was 0 times in quarter finals
+Name: Colonials --> Was 0 times in quarter finals
+Name: Demon Deacons --> Was 1 times in quarter finals
+Name: Midshipmen --> Was 1 times in quarter finals
+Name: Orange --> Was 7 times in quarter finals
+Name: Purple Eagles --> Was 0 times in quarter finals
+Name: Blackbirds --> Was 0 times in quarter finals
+Name: Green Wave --> Was 0 times in quarter finals
+Name: Rams --> Was 2 times in quarter finals
+Name: Hokies --> Was 0 times in quarter finals
+Name: Bison --> Was 0 times in quarter finals
+Name: Tar Heels --> Was 17 times in quarter finals
+Name: Gamecocks --> Was 1 times in quarter finals
+Name: Cyclones --> Was 1 times in quarter finals
+Name: Catamounts --> Was 0 times in quarter finals
+Name: Hilltoppers --> Was 0 times in quarter finals
+Name: Lobos --> Was 0 times in quarter finals
+Name: Great Danes --> Was 0 times in quarter finals
+Name: Cardinal --> Was 2 times in quarter finals
+Name: Mavericks --> Was 0 times in quarter finals
+Name: Bobcats --> Was 0 times in quarter finals
+Name: RedHawks --> Was 0 times in quarter finals
+Name: Stags --> Was 0 times in quarter finals
+Name: Trojans --> Was 1 times in quarter finals
+Name: Hoosiers --> Was 4 times in quarter finals
+Name: Quakers --> Was 0 times in quarter finals
+Name: Mountaineers --> Was 2 times in quarter finals
+Name: Redhawks --> Was 0 times in quarter finals
+Name: Golden Hurricane --> Was 1 times in quarter finals
+Name: Minutemen --> Was 2 times in quarter finals
+Name: Boilermakers --> Was 2 times in quarter finals
+Name: Red Wolves --> Was 0 times in quarter finals
+Name: Red Flash --> Was 0 times in quarter finals
+Name: Falcons --> Was 0 times in quarter finals
+Name: 49ers --> Was 0 times in quarter finals
+Name: Redbirds --> Was 0 times in quarter finals
+Name: Hawkeyes --> Was 1 times in quarter finals
+Name: Shockers --> Was 1 times in quarter finals
+Name: Crusaders --> Was 0 times in quarter finals
+Name: Golden Bears --> Was 0 times in quarter finals
+Name: Bengals --> Was 0 times in quarter finals
+Name: Dolphins --> Was 0 times in quarter finals
+Name: Hawks --> Was 1 times in quarter finals
+Name: Gators --> Was 9 times in quarter finals
+Name: Mustangs --> Was 0 times in quarter finals
+Name: Knights --> Was 0 times in quarter finals
+Name: Scarlet Knights --> Was 0 times in quarter finals
+Name: Raiders --> Was 0 times in quarter finals
+Name: Jaguars --> Was 0 times in quarter finals
+Name: Eagles --> Was 1 times in quarter finals
+Name: Razorbacks --> Was 4 times in quarter finals
+Name: Governors --> Was 0 times in quarter finals
+Name: Ducks --> Was 4 times in quarter finals
+Name: Red Storm --> Was 3 times in quarter finals
+Name: Fightin Blue Hens --> Was 0 times in quarter finals
+Name: Vikings --> Was 0 times in quarter finals
+Name: Colonels --> Was 0 times in quarter finals
+Name: Cardinals --> Was 8 times in quarter finals
+Name: Flames --> Was 0 times in quarter finals
+Name: Warriors --> Was 0 times in quarter finals
+Name: Wolverines --> Was 6 times in quarter finals
+Name: Titans --> Was 0 times in quarter finals
+Name: Blazers --> Was 0 times in quarter finals
+Name: Thundering Herd --> Was 0 times in quarter finals
+Name: Vandals --> Was 0 times in quarter finals
+Name: Buffaloes --> Was 0 times in quarter finals
+Name: Sun Devils --> Was 0 times in quarter finals
+Name: Toreros --> Was 0 times in quarter finals
+Name: Gaels --> Was 0 times in quarter finals
+Name: Nittany Lions --> Was 0 times in quarter finals
+Name: Greyhounds --> Was 0 times in quarter finals
+Name: Roadrunners --> Was 0 times in quarter finals
+Name: Golden Flashes --> Was 1 times in quarter finals
+Name: Ramblers --> Was 0 times in quarter finals
+Name: Jaspers --> Was 0 times in quarter finals
+Name: Aces --> Was 0 times in quarter finals
+Name: Jayhawks --> Was 14 times in quarter finals
+Name: Delta Devils --> Was 0 times in quarter finals
+Name: Big Red --> Was 0 times in quarter finals
+Name: Cowboys --> Was 3 times in quarter finals
+Name: Sooners --> Was 6 times in quarter finals
+Name: Red Foxes --> Was 0 times in quarter finals
+Name: Rebels --> Was 4 times in quarter finals
+Name: Buccaneers --> Was 0 times in quarter finals
+Name: Bulls --> Was 0 times in quarter finals
+Name: Crimson --> Was 0 times in quarter finals
+Name: Racers --> Was 0 times in quarter finals
+Name: Thunderbirds --> Was 0 times in quarter finals
+Name: Utes --> Was 2 times in quarter finals
+Name: Hornets --> Was 0 times in quarter finals
+Name: Pirates --> Was 2 times in quarter finals
+Name: Terrapins --> Was 2 times in quarter finals
+Name: Warhawks --> Was 0 times in quarter finals
+Name: Waves --> Was 0 times in quarter finals
+Name: Aggies --> Was 0 times in quarter finals
+Name: Dons --> Was 0 times in quarter finals
+Name: Miners --> Was 0 times in quarter finals
+Name: Retrievers --> Was 0 times in quarter finals
+Name: Badgers --> Was 4 times in quarter finals
+Name: Mocs --> Was 0 times in quarter finals
+Name: Seminoles --> Was 1 times in quarter finals
+Name: Dragons --> Was 0 times in quarter finals
+Name: Jackrabbits --> Was 0 times in quarter finals
+Name: Red Raiders --> Was 0 times in quarter finals
+Name: Golden Grizzlies --> Was 0 times in quarter finals
+Name: Musketeers --> Was 3 times in quarter finals
+Name: Huskies --> Was 10 times in quarter finals
+Name: Bluejays --> Was 0 times in quarter finals
+Name: Volunteers --> Was 1 times in quarter finals
+Name: Islanders --> Was 0 times in quarter finals
+Name: Grizzlies --> Was 0 times in quarter finals
+Name: Explorers --> Was 0 times in quarter finals
+Name: Chippewas --> Was 0 times in quarter finals
+Name: Aztecs --> Was 0 times in quarter finals
+Name: Crimson Tide --> Was 1 times in quarter finals
+Name: Longhorns --> Was 4 times in quarter finals
+Name: Pilots --> Was 0 times in quarter finals
+Name: Blue Devils --> Was 14 times in quarter finals
+Name: Billikens --> Was 0 times in quarter finals
+Name: Wildcats --> Was 34 times in quarter finals
+Name: Owls --> Was 5 times in quarter finals
+Name: Salukis --> Was 0 times in quarter finals
+Name: Hurricanes --> Was 0 times in quarter finals
+Name: Flyers --> Was 1 times in quarter finals
+Name: Friars --> Was 2 times in quarter finals
+Name: Golden Gophers --> Was 2 times in quarter finals
+Name: Fighting Illini --> Was 3 times in quarter finals
+Name: Fighting Irish --> Was 2 times in quarter finals
+Name: Golden Eagles --> Was 2 times in quarter finals
+Name: Buckeyes --> Was 5 times in quarter finals
+Name: Spiders --> Was 0 times in quarter finals
+Name: Zips --> Was 0 times in quarter finals
+Name: Commodores --> Was 0 times in quarter finals
+Name: Gauchos --> Was 0 times in quarter finals
+Name: Sycamores --> Was 0 times in quarter finals
+Name: Norse --> Was 0 times in quarter finals
+Name: Golden Griffins --> Was 0 times in quarter finals
+Name: Horned Frogs --> Was 0 times in quarter finals
+Name: Monarchs --> Was 0 times in quarter finals
+Name: Ragin' Cajuns --> Was 0 times in quarter finals
+Name: Highlanders --> Was 0 times in quarter finals
+Name: Matadors --> Was 0 times in quarter finals
+Name: Cavaliers --> Was 3 times in quarter finals
+Name: Demons --> Was 0 times in quarter finals
+Name: Golden Panthers --> Was 0 times in quarter finals
+Name: Bearkats --> Was 0 times in quarter finals
+Name: Cougars --> Was 0 times in quarter finals
+Name: Leopards --> Was 0 times in quarter finals
+Name: Fighting Camels --> Was 0 times in quarter finals
+Name: Beavers --> Was 0 times in quarter finals
+Name: Blue Demons --> Was 0 times in quarter finals
+Name: Bonnies --> Was 0 times in quarter finals
+Name: Hoyas --> Was 5 times in quarter finals
+Name: Bears --> Was 2 times in quarter finals
+Name: Anteaters --> Was 0 times in quarter finals
+Name: Peacocks --> Was 0 times in quarter finals
+Name: Bruins --> Was 6 times in quarter finals
+Name: Pride --> Was 0 times in quarter finals
+Name: Terriers --> Was 0 times in quarter finals
+Name: Lions --> Was 1 times in quarter finals
+Name: Bulldogs --> Was 6 times in quarter finals
+Name: Phoenix --> Was 0 times in quarter finals
+Name: Chanticleers --> Was 0 times in quarter finals
+Name: Wolf Pack --> Was 0 times in quarter finals
+Name: Privateers --> Was 0 times in quarter finals
+Name: Seawolves --> Was 0 times in quarter finals
+Name: Spartans --> Was 9 times in quarter finals
+Name: Broncs --> Was 0 times in quarter finals
+Name: Golden Lions --> Was 0 times in quarter finals
+Name: Mean Green --> Was 0 times in quarter finals
+Name: Broncos --> Was 0 times in quarter finals
+Name: Bearcats --> Was 3 times in quarter finals
+Name: Rattlers --> Was 0 times in quarter finals
+Name: Blue Raiders --> Was 0 times in quarter finals
+Name: Patriots --> Was 1 times in quarter finals
+Name: Seahawks --> Was 0 times in quarter finals
+Name: Panthers --> Was 1 times in quarter finals
+Name: Saints --> Was 0 times in quarter finals
+Name: Fighting Hawks --> Was 0 times in quarter finals
+Name: Cornhuskers --> Was 0 times in quarter finals
+Name: Tigers --> Was 12 times in quarter finals
+Name: Wolfpack --> Was 2 times in quarter finals
+Name: Dukes --> Was 0 times in quarter finals

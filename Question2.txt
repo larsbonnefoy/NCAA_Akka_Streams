@@ -1,0 +1,137 @@
+Name: Yellow Jackets --> Won 11 games by more than 5 points
+Name: Braves --> Won 2 games by more than 5 points
+Name: Colonials --> Won 2 games by more than 5 points
+Name: Mountain Hawks --> Won 0 games by more than 5 points
+Name: Midshipmen --> Won 3 games by more than 5 points
+Name: Demon Deacons --> Won 9 games by more than 5 points
+Name: Orange --> Won 36 games by more than 5 points
+Name: Purple Eagles --> Won 1 games by more than 5 points
+Name: Green Wave --> Won 1 games by more than 5 points
+Name: Rams --> Won 14 games by more than 5 points
+Name: Bison --> Won 0 games by more than 5 points
+Name: Hokies --> Won 1 games by more than 5 points
+Name: Gamecocks --> Won 4 games by more than 5 points
+Name: Tar Heels --> Won 74 games by more than 5 points
+Name: Cyclones --> Won 12 games by more than 5 points
+Name: Catamounts --> Won 1 games by more than 5 points
+Name: Hilltoppers --> Won 3 games by more than 5 points
+Name: Lobos --> Won 3 games by more than 5 points
+Name: Great Danes --> Won 1 games by more than 5 points
+Name: Cardinal --> Won 15 games by more than 5 points
+Name: Bobcats --> Won 2 games by more than 5 points
+Name: RedHawks --> Won 2 games by more than 5 points
+Name: Trojans --> Won 6 games by more than 5 points
+Name: Quakers --> Won 1 games by more than 5 points
+Name: Hoosiers --> Won 27 games by more than 5 points
+Name: Mountaineers --> Won 17 games by more than 5 points
+Name: Golden Hurricane --> Won 9 games by more than 5 points
+Name: Minutemen --> Won 9 games by more than 5 points
+Name: Boilermakers --> Won 17 games by more than 5 points
+Name: 49ers --> Won 4 games by more than 5 points
+Name: Redbirds --> Won 0 games by more than 5 points
+Name: Hawkeyes --> Won 10 games by more than 5 points
+Name: Shockers --> Won 10 games by more than 5 points
+Name: Crusaders --> Won 1 games by more than 5 points
+Name: Golden Bears --> Won 3 games by more than 5 points
+Name: Hawks --> Won 3 games by more than 5 points
+Name: Gators --> Won 39 games by more than 5 points
+Name: Mustangs --> Won 3 games by more than 5 points
+Name: Jaguars --> Won 1 games by more than 5 points
+Name: Eagles --> Won 16 games by more than 5 points
+Name: Razorbacks --> Won 22 games by more than 5 points
+Name: Governors --> Won 0 games by more than 5 points
+Name: Ducks --> Won 10 games by more than 5 points
+Name: Red Storm --> Won 12 games by more than 5 points
+Name: Vikings --> Won 2 games by more than 5 points
+Name: Warriors --> Won 1 games by more than 5 points
+Name: Cardinals --> Won 39 games by more than 5 points
+Name: Titans --> Won 0 games by more than 5 points
+Name: Wolverines --> Won 18 games by more than 5 points
+Name: Blazers --> Won 1 games by more than 5 points
+Name: Buffaloes --> Won 1 games by more than 5 points
+Name: Sun Devils --> Won 4 games by more than 5 points
+Name: Toreros --> Won 0 games by more than 5 points
+Name: Gaels --> Won 4 games by more than 5 points
+Name: Nittany Lions --> Won 2 games by more than 5 points
+Name: Roadrunners --> Won 1 games by more than 5 points
+Name: Ramblers --> Won 1 games by more than 5 points
+Name: Golden Flashes --> Won 2 games by more than 5 points
+Name: Jaspers --> Won 2 games by more than 5 points
+Name: Aces --> Won 0 games by more than 5 points
+Name: Jayhawks --> Won 65 games by more than 5 points
+Name: Big Red --> Won 2 games by more than 5 points
+Name: Cowboys --> Won 21 games by more than 5 points
+Name: Sooners --> Won 29 games by more than 5 points
+Name: Rebels --> Won 19 games by more than 5 points
+Name: Buccaneers --> Won 1 games by more than 5 points
+Name: Bulls --> Won 2 games by more than 5 points
+Name: Crimson --> Won 1 games by more than 5 points
+Name: Racers --> Won 1 games by more than 5 points
+Name: Utes --> Won 17 games by more than 5 points
+Name: Pirates --> Won 11 games by more than 5 points
+Name: Terrapins --> Won 24 games by more than 5 points
+Name: Waves --> Won 1 games by more than 5 points
+Name: Aggies --> Won 9 games by more than 5 points
+Name: Miners --> Won 3 games by more than 5 points
+Name: Mocs --> Won 1 games by more than 5 points
+Name: Badgers --> Won 23 games by more than 5 points
+Name: Dragons --> Won 1 games by more than 5 points
+Name: Seminoles --> Won 8 games by more than 5 points
+Name: Red Raiders --> Won 2 games by more than 5 points
+Name: Golden Grizzlies --> Won 1 games by more than 5 points
+Name: Musketeers --> Won 19 games by more than 5 points
+Name: Huskies --> Won 49 games by more than 5 points
+Name: Bluejays --> Won 2 games by more than 5 points
+Name: Volunteers --> Won 8 games by more than 5 points
+Name: Explorers --> Won 2 games by more than 5 points
+Name: Grizzlies --> Won 1 games by more than 5 points
+Name: Aztecs --> Won 5 games by more than 5 points
+Name: Chippewas --> Won 1 games by more than 5 points
+Name: Crimson Tide --> Won 12 games by more than 5 points
+Name: Longhorns --> Won 19 games by more than 5 points
+Name: Billikens --> Won 2 games by more than 5 points
+Name: Blue Devils --> Won 74 games by more than 5 points
+Name: Wildcats --> Won 138 games by more than 5 points
+Name: Owls --> Won 21 games by more than 5 points
+Name: Salukis --> Won 4 games by more than 5 points
+Name: Hurricanes --> Won 6 games by more than 5 points
+Name: Flyers --> Won 3 games by more than 5 points
+Name: Friars --> Won 6 games by more than 5 points
+Name: Golden Gophers --> Won 9 games by more than 5 points
+Name: Golden Eagles --> Won 10 games by more than 5 points
+Name: Fighting Irish --> Won 10 games by more than 5 points
+Name: Fighting Illini --> Won 24 games by more than 5 points
+Name: Spiders --> Won 1 games by more than 5 points
+Name: Buckeyes --> Won 24 games by more than 5 points
+Name: Commodores --> Won 6 games by more than 5 points
+Name: Gauchos --> Won 0 games by more than 5 points
+Name: Sycamores --> Won 0 games by more than 5 points
+Name: Horned Frogs --> Won 1 games by more than 5 points
+Name: Monarchs --> Won 2 games by more than 5 points
+Name: Ragin' Cajuns --> Won 0 games by more than 5 points
+Name: Cavaliers --> Won 15 games by more than 5 points
+Name: Demons --> Won 0 games by more than 5 points
+Name: Cougars --> Won 11 games by more than 5 points
+Name: Blue Demons --> Won 4 games by more than 5 points
+Name: Bears --> Won 11 games by more than 5 points
+Name: Hoyas --> Won 25 games by more than 5 points
+Name: Bruins --> Won 32 games by more than 5 points
+Name: Lions --> Won 2 games by more than 5 points
+Name: Phoenix --> Won 0 games by more than 5 points
+Name: Bulldogs --> Won 53 games by more than 5 points
+Name: Wolf Pack --> Won 3 games by more than 5 points
+Name: Privateers --> Won 0 games by more than 5 points
+Name: Spartans --> Won 41 games by more than 5 points
+Name: Golden Lions --> Won 1 games by more than 5 points
+Name: Broncos --> Won 1 games by more than 5 points
+Name: Bearcats --> Won 20 games by more than 5 points
+Name: Rattlers --> Won 1 games by more than 5 points
+Name: Blue Raiders --> Won 3 games by more than 5 points
+Name: Patriots --> Won 2 games by more than 5 points
+Name: Seahawks --> Won 0 games by more than 5 points
+Name: Panthers --> Won 20 games by more than 5 points
+Name: Saints --> Won 1 games by more than 5 points
+Name: Tigers --> Won 51 games by more than 5 points
+Name: Wolfpack --> Won 13 games by more than 5 points
+Name: Dukes --> Won 1 games by more than 5 points
+Name: Lumberjacks --> Won 1 games by more than 5 points

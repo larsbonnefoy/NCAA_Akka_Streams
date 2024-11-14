@@ -6,12 +6,14 @@ import java.time.LocalDate
   */
 case class CsvRow(
   season: String,
-  round: String,
+  round: Int,
   daysFromEpoch: String,
   gameDate: LocalDate,
   day: String,
-  winTeam: String, //just alias atm
-  loseTeam: String, //just alias atm
+  winTeam: String,
+  loseTeam: String,
+  winPoints: Int,
+  losePoints: Int
   //winSeed: Int,
   //loseSeed: Int,
   //numOt: Int,
@@ -20,4 +22,12 @@ case class CsvRow(
 
 case class SundayVictories(team: String, numberWins: Int) {
   override def toString: String = s"Name: ${team} --> Won Games on Sundays: ${numberWins}"
+}
+
+case class PointsVictories(team: String, numberWins: Int) {
+  override def toString: String = s"Name: ${team} --> Won ${numberWins} games by more than 5 points"
+}
+
+case class RoundInstances(team: String, number: Int) {
+  override def toString: String = s"Name: ${team} --> Was ${number} times in quarter finals"
 }
