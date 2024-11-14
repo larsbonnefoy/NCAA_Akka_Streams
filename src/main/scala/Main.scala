@@ -52,8 +52,8 @@ object Main extends App {
     }
 
   val q1Balancer = BalancerFlow(q1BalancerWorker)
-  val q1limiter1 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.numberWins == 0))
-  val q1limiter2 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.numberWins == 0))
+  val q1limiter1 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
+  val q1limiter2 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
 
   val broadcast = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
@@ -70,12 +70,12 @@ object Main extends App {
       FlowShape(broadcastShape.in, limiter2.out)
     }
 
-  val anotherLimiter = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.numberWins == 0))
+  val anotherLimiter = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
 
   val q1AggregatorFlow = Flow[Answer]
                         .groupBy(200, _.team)
                         .reduce {
-                          (a, b) => Answer(a.qType, a.team, a.numberWins + b.numberWins)
+                          (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
                         } 
                         .mergeSubstreams
 

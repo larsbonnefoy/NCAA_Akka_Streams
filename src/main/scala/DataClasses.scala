@@ -17,4 +17,11 @@ case class CsvRow(
 enum Question:
     case SundayVictories, PointsVictories, RoundInstances, YearlyLosses
 
-case class Answer(qType: Question, team: String, numberWins: Int)
+case class Answer(qType: Question, team: String, cntr: Int) {
+    override def toString: String = {
+      qType match {
+        case Question.SundayVictories => s"Name: ${team} --> Won Games on Sundays: ${cntr}"
+        case _ => s"(${qType}, ${team}, ${cntr})"
+      }
+    }
+}
