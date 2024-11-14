@@ -14,25 +14,26 @@ import akka.event.Logging
 
 /**
  *
- * Splits incoming stream `I` with `keyGen` in n substreams and feeds each substream into a Balancer.
- * Each substream goes through its own `balancer` instance
+ * Splits incoming stream of type `I` with `keyGen` in n substreams and feeds each substream into a Balancer.
  * All resulting streams are then merged back together.
- * For urther
+ * After that each stream has been split and merged back together, it might be that further processing is required.
+ * An aggregator can be provided to further process the data
  */
 class CustomFlow[I, O]
 
 object CustomFlow {
 
-  def apply[I, O, K](keyGen: I => K)(balancer: BalancerFlow[I, O])(aggregator: Flow[O, O, Any]) = 
+  def apply[I, O, K](keyGen: I => K)(balancer: Flow[I, O, NotUsed])(aggregator: Flow[O, O, Any]) = 
     GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
 
     //TODO: could probably do this directly on inlet or smtgh
     val groupByFlow = Flow[I].groupBy(1000, keyGen)
 
-
     val fullFlow = groupByFlow
                   // .log("After Flow Split")
+                  .via(balancer)
                   .mergeSubstreams
+                  .via(aggregator)
                   // .log("After Flow Balancer")
                   // .withAttributes(Attributes
                   //   .logLevels(onElement = Logging.InfoLevel))

@@ -5,19 +5,13 @@ import java.time.LocalDate
   * Class representing a Row from the input CSV file
   */
 case class CsvRow(
-  season: String,
+  season: Int,
   round: Int,
-  daysFromEpoch: String,
-  gameDate: LocalDate,
   day: String,
   winTeam: String,
   loseTeam: String,
   winPoints: Int,
   losePoints: Int
-  //winSeed: Int,
-  //loseSeed: Int,
-  //numOt: Int,
-  //academicYear: String
   )
 
 case class SundayVictories(team: String, numberWins: Int) {
@@ -30,4 +24,8 @@ case class PointsVictories(team: String, numberWins: Int) {
 
 case class RoundInstances(team: String, number: Int) {
   override def toString: String = s"Name: ${team} --> Was ${number} times in quarter finals"
+}
+
+case class YearlyLosses(team: String, numberLosses: Int) {
+  override def toString: String = s"Name: ${team} --> Lost ${numberLosses} times between 1980 and 1990"
 }

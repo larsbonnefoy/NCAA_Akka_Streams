@@ -9,6 +9,7 @@ import akka.stream.scaladsl.Merge
 import akka.stream.Inlet
 import akka.stream.Attributes
 import akka.event.Logging
+import akka.stream.Graph
 
 //TODO: Impl backpressure
 
@@ -20,7 +21,7 @@ import akka.event.Logging
  * All resulting streams are then merged back together.
  * This means that results must be merged back further via the 
  */
-class BalancerFlow[I, O]
+class BalancerFlow[I, O, M]
 
 object BalancerFlow {
 
@@ -47,14 +48,12 @@ object BalancerFlow {
     })
   }
 
-
   def apply[I, O](balancerWorker: Flow[I, O, Any]) = 
-    GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
-
-    val fullFlowShape = builder.add(balancer(balancerWorker))
-
-    FlowShape(fullFlowShape.in, fullFlowShape.out)
- }
+    val customGraph = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
+      val fullFlowShape = builder.add(balancer(balancerWorker))
+      FlowShape(fullFlowShape.in, fullFlowShape.out)
+    }
+    Flow.fromGraph(customGraph)
 
 
 }
