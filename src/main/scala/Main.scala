@@ -72,13 +72,24 @@ object Main extends App {
 
   val anotherLimiter = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.numberWins == 0))
 
+  val q1AggregatorFlow = Flow[Answer]
+                        .groupBy(200, _.team)
+                        .reduce {
+                          (a, b) => Answer(a.qType, a.team, a.numberWins + b.numberWins)
+                        } 
+                        .mergeSubstreams
+
+  val q1Sink = Sink.fromGraph(new WriterSink("Question1.txt", 20))
+
   val graph = Source.fromGraph(csvSource)
                 .groupBy(1000, _.winTeam)
                 .via(Flow.fromGraph(broadcast))
                 .mergeSubstreams
                 .via(anotherLimiter)
-                .to(Sink.foreach(println))
+                .via(q1AggregatorFlow)
+                .to(q1Sink)
                 .run()
+
   
   // val q1BalancerWorker = Flow[CsvRow]
   //   .mapConcat { elt =>
@@ -96,7 +107,6 @@ object Main extends App {
   //                       .mergeSubstreams
   //
   //
-  // val q1Sink = Sink.fromGraph(new WriterSink("Question1.txt", 20))
 
   // val graph = Source.fromGraph(csvSource)
   //               .via(q1Flow)
