@@ -20,7 +20,7 @@ import akka.stream.stage.OutHandler
 
 //back pressure will work automatically
 /**
-  * Flow that sends only one value out for with predicate == True
+  * Flow that sends only one value out for which predicate == True
   */
 class  LimiterFlow[T](predicate: T => Boolean) extends GraphStage[FlowShape[T, T]] {
 

@@ -14,12 +14,10 @@ import akka.stream.Graph
 //TODO: Impl backpressure
 
 /**
- *
- * Splits incoming stream `I` with `keyGen` in n substreams and feeds each substream into a Balancer.
- * Each Balancer branch applies the `balancerWorker[I, O]` flow and is then merge back.
- * This results in one substream per key of type `O`.
- * All resulting streams are then merged back together.
- * This means that results must be merged back further via the 
+ * Returns a BalancerFlow which splits incoming flow into two.
+ * Each Balancer branch applies the `balancerWorker[I, O]` flow.
+ * Results are then merged back.
+ * Optionally a flow can be applied before the balancer.
  */
 class BalancerFlow[I, O, M]
 
@@ -48,12 +46,31 @@ object BalancerFlow {
     })
   }
 
-  def apply[I, O](balancerWorker: Flow[I, O, Any]) = 
+  def apply[I, O](balancerWorker: Flow[I, O, Any], inFlow: Option[Flow[I, I, Any]] = None, outFlow: Option[Flow[O, O, Any]] = None) = 
     val customGraph = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
-      val fullFlowShape = builder.add(balancer(balancerWorker))
-      FlowShape(fullFlowShape.in, fullFlowShape.out)
+      import GraphDSL.Implicits._
+
+      val balancerShape = builder.add(balancer(balancerWorker))
+
+      (inFlow, outFlow) match {
+        case (None, None) => FlowShape(balancerShape.in, balancerShape.out)
+        case (Some(inflow), None) => {
+          val inflowShape = builder.add(inflow)
+          inflowShape ~> balancerShape
+          FlowShape(inflowShape.in, balancerShape.out)
+        }
+        case (None, Some(outflow)) => {
+          val outflowShape = builder.add(outflow)
+          balancerShape ~> outflowShape
+          FlowShape(balancerShape.in, outflowShape.out)
+        }
+        case (Some(inflow), Some(outflow)) => {
+          val inflowShape = builder.add(inflow)
+          val outflowShape = builder.add(outflow)
+          inflowShape ~> balancerShape ~> outflowShape
+          FlowShape(inflowShape.in, outflowShape.out)
+        }
+      }
     }
     Flow.fromGraph(customGraph)
-
-
 }

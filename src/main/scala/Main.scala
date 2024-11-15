@@ -20,6 +20,7 @@ import akka.event.Logging
 import akka.stream.scaladsl.Merge
 import akka.stream.FlowShape
 import NcaaPipeFilter.Question
+import akka.stream.SinkShape
 
 object Main extends App {
   implicit val system : ActorSystem = ActorSystem("GraphBasics")
@@ -39,118 +40,128 @@ object Main extends App {
                   fileRow("lose_pts").toInt)
     }
 
-  /**********Q1*************/
+  /*============================================= Solution 1 =============================================*/  
 
-  //TODO: Should convert days of the week to specific type to avoid checking on strings
-  //Filtering before does not work as it will create empty streams for teams that didnt win on Sunday
-  //Might be fixable if we can retrieve the key on which sublow has been split, so that we can init empty element to (name, 0)
-  //
+ /**********Q1*************/
+
   val q1BalancerWorker = Flow[CsvRow]
     .mapConcat { elt =>
       if elt.day == "Sunday" then List(Answer(Question.SundayVictories, elt.winTeam, 1), Answer(Question.SundayVictories, elt.loseTeam, 0))
       else List(Answer(Question.SundayVictories, elt.winTeam, 0), Answer(Question.SundayVictories, elt.loseTeam, 0))
-    }
+   }
 
-  val q1Balancer = BalancerFlow(q1BalancerWorker)
-  val q1limiter1 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
-  val q1limiter2 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
+  val limiter1 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
 
-  val broadcast = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
-      import GraphDSL.Implicits._
+  val q1Balancer = BalancerFlow(q1BalancerWorker, outFlow = Some(limiter1))
 
-      val broadcastShape = builder.add(Broadcast[CsvRow](1))
-      val balancer = builder.add(q1Balancer)
-      val limiter1 = builder.add(q1limiter1)
-      val limiter2 = builder.add(q1limiter2)
-      val logger = builder.add(Flow[Answer].map{elt => elt})
-      val mergeShape = builder.add(Merge[Answer](1))
-
-      broadcastShape ~> balancer ~> limiter1 ~> logger ~> mergeShape ~> limiter2
-
-      FlowShape(broadcastShape.in, limiter2.out)
-    }
-
-  val anotherLimiter = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
-
-  val q1AggregatorFlow = Flow[Answer]
-                        .groupBy(200, _.team)
-                        .reduce {
-                          (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
-                        } 
-                        .mergeSubstreams
+  val q1Flow = Flow[Answer]
+                .filter(p => p.qType == Question.SundayVictories)
+                .groupBy(200, _.team)
+                .reduce {
+                  (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
+                } 
+                .mergeSubstreams
 
   val q1Sink = Sink.fromGraph(new WriterSink("Question1.txt", 20))
+  
+  /**********Q2*************/
+  val q2BalancerWorker = Flow[CsvRow]
+    .mapConcat { elt =>
+      if elt.winPoints - elt.losePoints > 5 then List(Answer(Question.PointsVictories, elt.winTeam, 1), Answer(Question.PointsVictories, elt.loseTeam, 0))
+      else List(Answer(Question.PointsVictories, elt.winTeam, 0), Answer(Question.PointsVictories, elt.loseTeam, 0))
+    }
+
+  val limiter2 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
+
+  val q2Balancer = BalancerFlow(q2BalancerWorker, outFlow = Some(limiter2))
+
+  val q2Flow = Flow[Answer]
+                .filter(p => p.qType == Question.PointsVictories)
+                .groupBy(200, _.team)
+                .reduce {
+                  (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
+                } 
+                .mergeSubstreams
+
+  val q2Sink = Sink.fromGraph(new WriterSink("Question2.txt", 20))
+
+  /**********Q3*************/
+  val q3BalancerWorker = Flow[CsvRow]
+    .mapConcat { elt =>
+      if (elt.round == 8) then List(Answer(Question.QuarterTimes, elt.winTeam, 1), Answer(Question.QuarterTimes, elt.loseTeam, 1))
+      else List(Answer(Question.QuarterTimes, elt.winTeam, 0), Answer(Question.QuarterTimes, elt.loseTeam, 0))
+    }
+
+  //Adding a filter to only keep rounds of 64 and rounds of 8
+  val q3preFilter = Flow[CsvRow]
+    .filter {elt => (elt.round == 64 || elt.round == 8)}
+
+  val limiter3 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
+
+  val q3Balancer = BalancerFlow(q3BalancerWorker, inFlow = Some(q3preFilter), outFlow = Some(limiter3))
+
+  val q3Flow = Flow[Answer]
+                .filter(p => p.qType == Question.QuarterTimes)
+                .groupBy(200, _.team)
+                .reduce {
+                  (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
+                } 
+                .mergeSubstreams
+
+  val q3Sink = Sink.fromGraph(new WriterSink("Question3.txt", 20))
+
+  /*******Q4*********/
+  val q4BalancerWorker = Flow[CsvRow]
+    .mapConcat { elt =>
+      if (elt.season >= 1980 && elt.season <= 1990) then List(Answer(Question.YearlyLosses, elt.winTeam, 0), Answer(Question.YearlyLosses, elt.loseTeam, 1))
+      else List(Answer(Question.YearlyLosses, elt.winTeam, 0), Answer(Question.YearlyLosses, elt.loseTeam, 0))
+    }
+
+  val limiter4 = Flow.fromGraph(new LimiterFlow[Answer](ans => ans.cntr == 0))
+
+  val q4Balancer = BalancerFlow(q4BalancerWorker, outFlow = Some(limiter4))
+
+  val q4Flow = Flow[Answer]
+                .filter(p => p.qType == Question.YearlyLosses)
+                .groupBy(200, _.team)
+                .reduce {
+                  (a, b) => Answer(a.qType, a.team, a.cntr + b.cntr)
+                } 
+                .mergeSubstreams
+
+  val q4Sink = Sink.fromGraph(new WriterSink("Question4.txt", 20))
+
+  val substreamFlow = CustomFlow(Seq(q1Balancer, q2Balancer, q3Balancer, q4Balancer))
+
+  val aggregateResult = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
+      import GraphDSL.Implicits._
+
+      val broadcastShape = builder.add(Broadcast[Answer](4))
+      val q1flowShape = builder.add(q1Flow)
+      val q1sinkShape = builder.add(q1Sink)
+
+      val q2flowShape = builder.add(q2Flow)
+      val q2sinkShape = builder.add(q2Sink)
+
+      val q3flowShape = builder.add(q3Flow)
+      val q3sinkShape = builder.add(q3Sink)
+
+      val q4flowShape = builder.add(q4Flow)
+      val q4sinkShape = builder.add(q4Sink)
+
+      broadcastShape ~> q1flowShape ~> q1sinkShape
+      broadcastShape ~> q2flowShape ~> q2sinkShape
+      broadcastShape ~> q3flowShape ~> q3sinkShape
+      broadcastShape ~> q4flowShape ~> q4sinkShape
+
+      SinkShape(broadcastShape.in)
+    }
 
   val graph = Source.fromGraph(csvSource)
-                .groupBy(1000, _.winTeam)
-                .via(Flow.fromGraph(broadcast))
+                .groupBy(200, _.winTeam)
+                .via(Flow.fromGraph(substreamFlow))
                 .mergeSubstreams
-                .via(anotherLimiter)
-                .via(q1AggregatorFlow)
-                .to(q1Sink)
+                .to(Sink.fromGraph(aggregateResult))
                 .run()
-
-  
-  // val q1BalancerWorker = Flow[CsvRow]
-  //   .mapConcat { elt =>
-  //     if elt.day == "Sunday" then List(SundayVictories(elt.winTeam, 1), SundayVictories(elt.loseTeam, 0))
-  //     else List(SundayVictories(elt.winTeam, 0), SundayVictories(elt.loseTeam, 0))
-  //   }
-  //
-  // val q1Balancer = BalancerFlow(q1BalancerWorker)
-  //
-  // val q1AggregatorFlow = Flow[SundayVictories]
-  //                       .groupBy(1000, _.team)
-  //                       .reduce {
-  //                         (a, b) => SundayVictories(a.team, a.numberWins + b.numberWins)
-  //                       } 
-  //                       .mergeSubstreams
-  //
-  //
-
-  // val graph = Source.fromGraph(csvSource)
-  //               .via(q1Flow)
-  //               .to(q1Sink)
-  //               .run()
-
-  /**********Q2*************/
-
-  /*****Graph*********/
-
-  // val graph = RunnableGraph.fromGraph( 
-  //   GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
-  //     import GraphDSL.Implicits._
-  //
-  //     val broadcastShape = builder.add(Broadcast[CsvRow](4))
-  //     
-  //     val inputShape = builder.add(csvSource)
-  //
-  //     val q1FlowShape = builder.add(q1Flow)
-  //     val q1SinkShape = builder.add(q1Sink)
-  //
-  //     val q2FlowShape = builder.add(q2Flow)
-  //     val q2SinkShape = builder.add(q2Sink)
-  //
-  //     val q3FlowShape = builder.add(q3Flow)
-  //     val q3SinkShape = builder.add(q3Sink)
-  //
-  //     val q4FlowShape = builder.add(q4Flow)
-  //     val q4SinkShape = builder.add(q4Sink)
-  //
-  //                   broadcastShape ~> q2FlowShape ~> q2SinkShape
-  //     inputShape ~> broadcastShape ~> q1FlowShape ~> q1SinkShape
-  //                   broadcastShape ~> q3FlowShape ~> q3SinkShape
-  //                   broadcastShape ~> q4FlowShape ~> q4SinkShape
-  //
-  //     ClosedShape
-  //   }
-  // ) 
-
-  // graph.run()
-
-   // graph.onComplete {
-   //   case Success(_) => println("All elements have been processed")
-   //   case Failure(exception) => println(s"An error occured with status ${exception}")
-   // }
 
 }
