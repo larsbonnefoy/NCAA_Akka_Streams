@@ -16,7 +16,7 @@ import java.io.FileWriter
 
 
 //back pressure will work automatically
-class  WriterSink[T](path: String, batchSize: Int) extends GraphStage[SinkShape[T]] {
+class  BatchWriter[T](path: String, batchSize: Int) extends GraphStage[SinkShape[T]] {
 
   val inPort = Inlet[T]("writer")
 

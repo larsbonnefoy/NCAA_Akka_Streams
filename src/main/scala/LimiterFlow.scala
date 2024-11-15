@@ -22,7 +22,7 @@ import akka.stream.stage.OutHandler
 /**
   * Flow that sends only one value out for which predicate == True
   */
-class  LimiterFlow[T](predicate: T => Boolean) extends GraphStage[FlowShape[T, T]] {
+class  LimiterFlow[T](implicit predicate: T => Boolean) extends GraphStage[FlowShape[T, T]] {
 
   val inPort = Inlet[T]("LimiterIn")
   val outPort = Outlet[T]("LimiterOut")

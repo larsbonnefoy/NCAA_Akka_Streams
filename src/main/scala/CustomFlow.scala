@@ -21,19 +21,26 @@ class CustomFlow[I, O]
 object CustomFlow {
 
   def apply[I, O](balancers: Seq[Flow[I, O, Any]]) = 
-    GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
-    import akka.stream.scaladsl.GraphDSL.Implicits.fanOut2flow
+    Flow.fromGraph {
+      GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
+      import akka.stream.scaladsl.GraphDSL.Implicits.fanOut2flow
 
-    val nbBalancers = balancers.length
-    val broadcastShape = builder.add(Broadcast[I](nbBalancers))
-    val mergeShape = builder.add(Merge[O](nbBalancers))
+      val nbBalancers = balancers.length
+      val broadcastShape = builder.add(Broadcast[I](nbBalancers))
+      val mergeShape = builder.add(Merge[O](nbBalancers))
 
-    balancers.foreach { balancer =>
-      val balancerShape = builder.add(balancer)
-      broadcastShape ~> balancerShape ~> mergeShape
+      balancers.foreach { balancer =>
+        val balancerShape = builder.add(balancer.async.map { elt => println(s"${Thread.currentThread().getId}"); elt})
+      // .map { elt =>
+      //   println(s"I am running on thread [${Thread.currentThread().getId}]")
+      //   elt
+      // }
+
+        broadcastShape ~> balancerShape ~> mergeShape
+      }
+      
+      FlowShape(broadcastShape.in, mergeShape.out)
     }
-    
-    FlowShape(broadcastShape.in, mergeShape.out)
  }
 
 
