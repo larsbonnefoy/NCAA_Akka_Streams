@@ -11,8 +11,6 @@ import akka.stream.Attributes
 import akka.event.Logging
 import akka.stream.scaladsl.Broadcast
 
-//TODO: Impl backpressure
-
 /**
  * Connects
  */
@@ -30,15 +28,10 @@ object CustomFlow {
       val mergeShape = builder.add(Merge[O](nbBalancers))
 
       balancers.foreach { balancer =>
-        val balancerShape = builder.add(balancer.async.map { elt => println(s"${Thread.currentThread().getId}"); elt})
-      // .map { elt =>
-      //   println(s"I am running on thread [${Thread.currentThread().getId}]")
-      //   elt
-      // }
+        val balancerShape = builder.add(balancer)
 
         broadcastShape ~> balancerShape ~> mergeShape
       }
-      
       FlowShape(broadcastShape.in, mergeShape.out)
     }
  }

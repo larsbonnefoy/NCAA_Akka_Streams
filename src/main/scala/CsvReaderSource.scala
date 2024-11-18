@@ -16,6 +16,13 @@ import akka.stream.scaladsl.GraphDSL
 import akka.stream.SourceShape
 import akka.stream.scaladsl.Flow
 import java.time.LocalDate
+import akka.stream.Supervision
+import akka.stream.ActorAttributes
+import akka.event.Logging
+import akka.actor.ActorSystem
+import scala.util.Try
+import scala.util.Success
+import scala.util.Failure
 
 class CsvReaderSource[T]
 
@@ -28,16 +35,27 @@ object CsvReaderSource {
   def apply[T](path: String)(transform: Map[String, String] => T) = GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
 
+      val resumeDecider = Supervision.resumingDecider
+
       val file = Paths.get(path)
 
       //Produces a mapping from lines of the CSV file to Map[String, String]
       val csvToMapReader = FileIO
-                      .fromPath(file)
-                      .via(CsvParsing.lineScanner())
-                      .via(CsvToMap.toMapAsStrings())
+        .fromPath(file)
+        .via(CsvParsing.lineScanner())
+        .via(CsvToMap.toMapAsStrings())
 
       //Converts Map[String, String] to object of type T
-      val converterFlow = Flow[Map[String, String]].map[T](transform)
+      val converterFlow = Flow[Map[String, String]]
+        .map[T] { elt => 
+          Try(transform(elt)) match {
+            case Success(res) =>  res
+            case Failure(exception) => 
+              println(s"Could not parse element ${elt} because of ${exception}")
+              throw exception //let supervision strategy handle the restart
+          } 
+        }
+        .withAttributes(ActorAttributes.supervisionStrategy(resumeDecider))
 
       val source = builder.add(csvToMapReader)
       val transformflow = builder.add(converterFlow)

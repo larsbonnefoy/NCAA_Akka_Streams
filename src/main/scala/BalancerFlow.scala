@@ -34,9 +34,6 @@ object BalancerFlow {
 
       for (i <- 1 to 2) {
         val workerWithLogs = balancerWorker
-                                .log(s"worker${i}")
-                                .withAttributes(Attributes
-                                  .logLevels(onElement = Logging.InfoLevel))
 
         balancer ~> balancerWorker.async ~> merge
         //balancer ~> workerWithLogs.async ~> merge
