@@ -69,7 +69,6 @@ object Main extends App {
 
  /*********/
  //Most of the questions are similar => define some helper functions
-
   implicit val limiterPredicate: Answer => Boolean = (ans: Answer) => (ans.cntr == 0) 
 
   /**
@@ -80,7 +79,7 @@ object Main extends App {
     val limiter = Flow.fromGraph(new LimiterFlow[Answer])
     Flow[CsvRow]
       .mapConcat(f)
-      // .via(limiter)
+      //.via(limiter)
   }
 
   /**
@@ -179,15 +178,16 @@ object Main extends App {
 
       val broadcastShape = builder.add(Broadcast[Answer](4))
 
-      // val q1sinkShape = builder.add(sink1.async)
-      // val q2sinkShape = builder.add(sink2.async)
-      // val q3sinkShape = builder.add(sink3.async)
-      // val q4sinkShape = builder.add(sink4.async)
+      // val sink1 = builder.add(sink1.async)
+      // val sink2 = builder.add(sink2.async)
+      // val sink3 = builder.add(sink3.async)
+      // val sink4 = builder.add(sink4.async)
       val sink1 : SinkShape[Answer] = s1.asInstanceOf[SinkShape[Answer]]
       val sink2 : SinkShape[Answer] = s2.asInstanceOf[SinkShape[Answer]]
       val sink3 : SinkShape[Answer] = s3.asInstanceOf[SinkShape[Answer]]
       val sink4 : SinkShape[Answer] = s4.asInstanceOf[SinkShape[Answer]]
 
+      // broadcastShape ~> s1
       broadcastShape ~> sink1
       broadcastShape ~> sink2
       broadcastShape ~> sink3
@@ -227,10 +227,6 @@ object Main extends App {
   // }
 
 
-  // val whatisthis = new BatchWriter("tmp.txt") 
-  // val tmpSink = Sink.fromGraph(new BatchWriter[Int]("tmp.txt"))
-  // val tmpSrc = Source(1 to 100).toMat(tmpSink)(Keep.right).run()
-  //
   // tmpSrc.onComplete {
   //   case Success(value) => println("Works")
   //   case Failure(exception) => println(exception)
@@ -239,52 +235,4 @@ object Main extends App {
   //     println(s"Total elements passed through: ${counter.get()}")
   // }
 
-  /*============================================= Solution 2 =============================================*/  
-
-  // val balancerWorker1_2 = Flow[CsvRow]
-  //   .filter { elt => elt.day == "Sunday"}
-  //   .map[Answer]{ elt => println("Key: " + elt.winTeam); Answer(Question.SundayVictories, elt.winTeam, 1)} 
-  //   .reduce((l, r) => Answer(l.qType, l.team, l.cntr + r.cntr))
-  //
-  // val reducer1_2 = Flow[Answer]
-  //   .reduce((l, r) => Answer(l.qType, l.team, l.cntr + r.cntr))
-  //
-  // val balancer1_2 = BalancerFlow(balancerWorker1_2, outFlow = Some(reducer1_2))
-  //
-  // val substreamFlow2 = CustomFlow(Seq(balancer1_2))
-  //
-  // val filter1_2 = Flow[Answer]
-  //   .filter {elt => elt.qType == Question.SundayVictories}
-  //
-  // val sink1_2 = CustomSink(filter1_2, "Question4.txt")
-  //
-  // val dispatchResults2 = Sink.fromGraph (
-  //   GraphDSL.create() { 
-  //     implicit builder =>
-  //     import GraphDSL.Implicits._
-  //
-  //     val broadcastShape = builder.add(Broadcast[Answer](1))
-  //
-  //     val sink1 = builder.add(sink1_2)
-  //     // val q2sinkShape = builder.add(sink2.async)
-  //     // val q3sinkShape = builder.add(sink3.async)
-  //     // val q4sinkShape = builder.add(sink4.async)
-  //
-  //     broadcastShape ~> sink1
-  //
-  //     SinkShape(broadcastShape.in)
-  //   }
-  // )
-  // val solution2Graph = Source.fromGraph(csvSource)
-  //               .groupBy(200, _.winTeam)
-  //               .async
-  //               .buffer(20, OverflowStrategy.backpressure)
-  //               .via(substreamFlow2)
-  //               .mergeSubstreams
-  //               .to(dispatchResults2)
-  //               .run()
-  //               // .via(countingFlow)
-  //               // .toMat(dispatchAggregateResults)(Keep.right)
-  //               // .run()
-  //
 }
