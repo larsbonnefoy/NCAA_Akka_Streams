@@ -15,14 +15,49 @@ case class CsvRow(
   )
 
 enum Question:
-    case SundayVictories, PointsVictories, QuarterTimes, YearlyLosses
+    case BigLoss, PointsVictories, Top5, YearlyLosses
 
-case class Answer(qType: Question, team: String, cntr: Int) {
+type Score = Int
+
+sealed trait Count {
+  def +(other: Count): Count
+  override def toString: String
+}
+
+
+object Count {
+  def simple(value: Int): Count = SimpleCount(value)
+  def winLoss(isWin: Boolean, score: Int): Count = 
+    if (isWin) WinLossCount(1, score, 1) else WinLossCount(0, score, 1)
+}
+
+case class SimpleCount(value: Int) extends Count {
+  def +(other: Count): Count = other match {
+    case SimpleCount(otherValue) => SimpleCount(value + otherValue)
+    case _ => throw new IllegalArgumentException("Cannot add different count types")
+  }
+  
+  override def toString: String = value.toString
+}
+
+case class WinLossCount(wins: Int, totalScore: Int, gamesPlayed: Int) extends Count {
+  def +(other: Count): Count = other match {
+    case WinLossCount(otherWins, otherScore, otherGames) => 
+      WinLossCount(wins + otherWins, totalScore + otherScore, gamesPlayed + otherGames)
+    case _ => throw new IllegalArgumentException("Cannot add different count types")
+  }
+  
+  def averageScore: Double = if (gamesPlayed > 0) totalScore.toDouble / gamesPlayed else 0.0
+  
+  override def toString: String = f"${averageScore}%.2f (Wins: ${wins}, Total Played: ${gamesPlayed})"
+}
+
+case class Answer(qType: Question, team: String, cntr: Count) {
     override def toString: String = {
       qType match {
-        case Question.SundayVictories => s"Name: ${team} --> Won Games on Sundays: ${cntr}"
+        case Question.BigLoss => s"Name: ${team} --> Lost Games with more than 85 points: ${cntr}"
         case Question.PointsVictories => s"Name: ${team} --> Won Games with more than 5 pts: ${cntr}"
-        case Question.QuarterTimes => s"Name: ${team} --> Times in quarters: ${cntr}"
+        case Question.Top5 => s"Name: ${team} --> Average Points / Game: ${cntr}"
         case Question.YearlyLosses => s"Name: ${team} --> Times in quarters: ${cntr}"
       }
     }
