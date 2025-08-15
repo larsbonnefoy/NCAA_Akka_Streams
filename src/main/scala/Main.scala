@@ -120,8 +120,8 @@ object Main extends App {
       val neutralElt = answerElt(_, Count.simple(0));
 
       // NEW:
-      // Changed Q1 here to check which team lost by more than 85 points
-      if elt.winPoints - elt.losePoints > 85 then List(answerElt(elt.loseTeam, Count.simple(1)), neutralElt(elt.winTeam))
+      // Changed Q1 here to check which team lost with more than 85 points
+      if elt.losePoints > 85 then List(answerElt(elt.loseTeam, Count.simple(1)), neutralElt(elt.winTeam))
       else List(neutralElt(elt.loseTeam), neutralElt(elt.winTeam))
   }
 
@@ -139,7 +139,8 @@ object Main extends App {
   val balancerWorker2 = createWorker { elt =>
       val answerElt = Answer(Question.PointsVictories, _, _);
       val neutralElt = answerElt(_, Count.simple(0));
-      if elt.winPoints - elt.losePoints > 5 then List(answerElt(elt.winTeam, Count.simple(1)), neutralElt(elt.loseTeam))
+      // Fixed "<" here: 5 points or fewer
+      if elt.winPoints - elt.losePoints <= 5 then List(answerElt(elt.winTeam, Count.simple(1)), neutralElt(elt.loseTeam))
       else List(neutralElt(elt.winTeam), neutralElt(elt.loseTeam))
   }
 
@@ -175,7 +176,8 @@ object Main extends App {
   // Produces a list from reduces values and sorts by number of won games to take top5
   val takeTop5 = Flow[Answer]
     .fold(List.empty[Answer])(_ :+ _)  // Need to collect all answers
-    .map(answers => answers.sortBy(answer => -getWins(answer.cntr)).take(5)) //sort by highest wins and take 5
+    .map(answers => answers.sortBy(answer => -getWins(answer.cntr))
+    .take(5)) //sort by highest wins and take 5
     .mapConcat(identity)  // Flattens to individual elems to be passed to print
 
   val q3SinkFlow = Flow[Answer]
@@ -195,7 +197,7 @@ object Main extends App {
   val limiter4 = Flow.fromGraph(new LimiterFlow[Answer])
   val balancer4 = BalancerFlow(balancerWorker4, outFlow = Some(limiter4))
 
-  val filterReduce4 = createFilterReduce{ ans => ans.qType == Question.Top5 }
+  val filterReduce4 = createFilterReduce{ ans => ans.qType == Question.YearlyLosses }
 
   val sink4 = CustomSink(filterReduce4, "Question4.txt")
 

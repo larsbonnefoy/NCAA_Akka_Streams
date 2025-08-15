@@ -56,9 +56,9 @@ case class Answer(qType: Question, team: String, cntr: Count) {
     override def toString: String = {
       qType match {
         case Question.BigLoss => s"Name: ${team} --> Lost Games with more than 85 points: ${cntr}"
-        case Question.PointsVictories => s"Name: ${team} --> Won Games with more than 5 pts: ${cntr}"
+        case Question.PointsVictories => s"Name: ${team} --> Won Games with less than or 5 pts: ${cntr}"
         case Question.Top5 => s"Name: ${team} --> Average Points / Game: ${cntr}"
-        case Question.YearlyLosses => s"Name: ${team} --> Times in quarters: ${cntr}"
+        case Question.YearlyLosses => s"Name: ${team} --> Times lost between 1980-1990: ${cntr}"
       }
     }
 }
