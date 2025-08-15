@@ -80,7 +80,7 @@ object Main extends App {
 
 
   //General throttleFlow which will be added as entry to each BalancerFlow
-  val throttleFlow = Flow[CsvRow]//.throttle(5, 1.second)
+  val throttleFlow = Flow[CsvRow].throttle(5, 1.second)
 
   /**
     * Creates a new worker which applies function f and attaches a limiter
@@ -246,7 +246,7 @@ object Main extends App {
                 }
                 // Drop oldest element -- 5 elems per flow + buffer of 10 will lead to dropped values
                 // If we change to backpressure and to throttle no elements are dropped
-                .buffer(10, OverflowStrategy.backpressure) 
+                .buffer(10, OverflowStrategy.dropHead) 
                 .map { elem =>
                   val out = outputCounter.incrementAndGet()
                   val in = inputCounter.get()
